@@ -1,78 +1,47 @@
+#include "monty.h"
 #include <stdlib.h>
 #include <stdio.h>
-#include <string.h>
-#include "monty.h"
-
+bus_t bus = {NULL, NULL, NULL, 0};
 /**
- * error_usage - prints usage message and exits
- *
- * Return: nothing
- */
-void error_usage(void)
+* main - monty code interpreter
+* @argc: number of arguments
+* @argv: monty file location
+* Return: 0 on success
+*/
+int main(int argc, char *argv[])
 {
-	fprintf(stderr, "USAGE: monty file\n");
-	exit(EXIT_FAILURE);
-}
-
-/**
- * file_error - prints file error message and exits
- * @argv: argv given by manin
- *
- * Return: nothing
- */
-void file_error(char *argv)
-{
-	fprintf(stderr, "Error: Can't open file %s\n", argv);
-	exit(EXIT_FAILURE);
-}
-
-int status = 0;
-/**
- * main - entry point
- * @argv: list of arguments passed to our program
- * @argc: ammount of args
- *
- * Return: nothing
- */
-int main(int argc, char **argv)
-{
+	char *content;
 	FILE *file;
-	size_t buf_len = 0;
-	char *buffer = NULL;
-	char *str = NULL;
+	size_t size = 0;
+	size_t read_line = 1;
 	stack_t *stack = NULL;
-	unsigned int line_cnt = 1;
+	unsigned int counter = 0;
 
-	global.data_struct = 1;
 	if (argc != 2)
-		error_usage();
-
-	file = fopen(argv[1], "r");
-
-	if (!file)
-		file_error(argv[1]);
-
-	while (getline(&buffer, &buf_len, file) != -1)
 	{
-		if (status)
-			break;
-		if (*buffer == '\n')
-		{
-			line_cnt++;
-			continue;
-		}
-		str = strtok(buffer, " \t\n");
-		if (!str || *str == '#')
-		{
-			line_cnt++;
-			continue;
-		}
-		global.argument = strtok(NULL, " \t\n");
-		opcode(&stack, str, line_cnt);
-		line_cnt++;
+		fprintf(stderr, "USAGE: monty file\n");
+		exit(EXIT_FAILURE);
 	}
-	free(buffer);
+	file = fopen(argv[1], "r");
+	bus.file = file;
+	if (!file)
+	{
+		fprintf(stderr, "Error: Can't open file %s\n", argv[1]);
+		exit(EXIT_FAILURE);
+	}
+	while (read_line > 0)
+	{
+		content = NULL;
+		read_line = getline(&content, &size, file);
+		bus.content = content;
+		counter++;
+		if (read_line > 0)
+		{
+			execute(content, &stack, counter, file);
+		}
+		free(content);
+	}
 	free_stack(stack);
 	fclose(file);
-	exit(status);
+return (0);
 }
