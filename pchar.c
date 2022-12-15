@@ -1,6 +1,4 @@
 #include "monty.h"
-#include <stdlib.h>
-#include <stdio.h>
 /**
  * f_pchar - prints the char at the top of the stack,
  * followed by a new line
