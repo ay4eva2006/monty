@@ -1,3 +1,0 @@
-pall
-pall
-pall
