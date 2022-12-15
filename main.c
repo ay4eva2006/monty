@@ -1,6 +1,7 @@
 #include "monty.h"
 #include <stdlib.h>
 #include <stdio.h>
+#include <string.h>
 bus_t bus = {NULL, NULL, NULL, 0};
 /**
 * main - monty code interpreter
