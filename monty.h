@@ -2,13 +2,6 @@
 #define MONTY_H
 
 #include <stddef.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <ctype.h>
-#include <string.h>
-
-#define DELIMATOR "\n\t\r "
-
 /**
  * struct stack_s - doubly linked list representation of a stack (or queue)
  * @n: integer
@@ -89,7 +82,7 @@ void pstr(stack_t **stack, unsigned int line_cnt);
 void rotl(stack_t **stack, unsigned int line_count);
 void rotr(stack_t **stack, unsigned int line_count);
 void opcode(stack_t **stack, char *str, unsigned int line_cnt);
-size_t getline(buffer, buf_len);
+
 int is_digit(char *string);
 int isnumber(char *str);
 
