@@ -1,5 +1,5 @@
 #include "monty.h"
-
+bus_t bus = {NULL, NULL, NULL, 0};
 /**
 * main - monty code interpreter
 * @argc: number of arguments
@@ -7,7 +7,6 @@
 * Return: 0 on success
 */
 int main(int argc, char *argv[])
-	bus_t bus = {NULL, NULL, NULL, 0}
 {
 	char *content;
 	FILE *file;
